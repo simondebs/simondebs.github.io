@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💌 Important Question</title>
+
+  <style>
+    :root{
+      --red:#ff2d55;
+      --pink:#ff4d7d;
+      --soft:#fff0f5;
+      --text:#2b2b2b;
+      --card:#ffffffee;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0; height:100vh; overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, #ffe3ec 0%, transparent 45%),
+        radial-gradient(circle at 80% 20%, #ffd6e6 0%, transparent 40%),
+        radial-gradient(circle at 50% 110%, #fff 0%, #ffeaf2 50%, #ffd2e1 100%);
+      position:relative;
+    }
+
+    /* Soft background hearts */
+    .bg-hearts{
+      position:absolute; inset:-20px;
+      pointer-events:none;
+      opacity:.25;
+      filter: blur(.2px);
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,45,85,.25) 0 2px, transparent 3px),
+        radial-gradient(circle at 40% 10%, rgba(255,77,125,.22) 0 2px, transparent 3px),
+        radial-gradient(circle at 70% 30%, rgba(255,45,85,.18) 0 2px, transparent 3px),
+        radial-gradient(circle at 85% 70%, rgba(255,77,125,.20) 0 2px, transparent 3px),
+        radial-gradient(circle at 25% 80%, rgba(255,45,85,.16) 0 2px, transparent 3px);
+      background-size: 220px 220px;
+    }
+
+    .card{
+      width:min(560px, 92vw);
+      background:var(--card);
+      border-radius:26px;
+      padding:28px 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.14);
+      border: 1px solid rgba(255,45,85,.14);
+      text-align:center;
+      position:relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .topline{
+      display:flex; justify-content:center; gap:10px; align-items:center;
+      margin-bottom:8px;
+      font-weight:700;
+      letter-spacing:.2px;
+      color: #b3002d;
+    }
+
+    h1{
+      margin:8px 0 8px;
+      font-size:28px;
+    }
+
+    p{
+      margin:0 0 18px;
+      color:#444;
+      line-height:1.35;
+    }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,45,85,.10);
+      border: 1px solid rgba(255,45,85,.16);
+      font-size:13px;
+      color:#7a0b2b;
+      margin: 6px 0 14px;
+    }
+
+    .btns{
+      display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+      margin-top:8px;
+      position:relative;
+      min-height:52px;
+    }
+
+    button{
+      border:0;
+      padding:12px 18px;
+      border-radius:999px;
+      font-size:16px;
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .18s ease, opacity .18s ease;
+      user-select:none;
+    }
+
+    button:active{ transform: scale(.98); }
+
+    .primary{
+      background: linear-gradient(135deg, var(--red), var(--pink));
+      color:white;
+      box-shadow: 0 14px 30px rgba(255,45,85,.25);
+    }
+
+    .ghost{
+      background:#fff;
+      border:1px solid rgba(0,0,0,.08);
+      color:#111;
+    }
+
+    #no{
+      position:relative;
+    }
+
+    /* Sections */
+    .section{ display:none; }
+    .section.active{ display:block; }
+
+    #msg{
+      margin-top:18px;
+      padding:16px;
+      border-radius:18px;
+      background: var(--soft);
+      border:1px solid rgba(255,45,85,.18);
+    }
+
+    #final{
+      margin-top:16px;
+      display:none;
+      padding:16px;
+      border-radius:18px;
+      background: #fff;
+      border:1px dashed rgba(255,45,85,.35);
+    }
+
+    .tiny{
+      font-size:12px; color:#777; margin-top:14px;
+    }
+
+    /* Floating hearts (spawned by JS) */
+    .heart{
+      position:absolute;
+      bottom:-30px;
+      font-size: 18px;
+      opacity:.9;
+      animation: floatUp linear forwards;
+      pointer-events:none;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
+    }
+
+    @keyframes floatUp{
+      from{ transform: translateY(0) translateX(0) scale(1); opacity: .95; }
+      to  { transform: translateY(-120vh) translateX(var(--drift)) scale(var(--scale)); opacity: 0; }
+    }
+
+    /* Small bounce on reveal */
+    .pop{
+      animation: pop .35s ease-out;
+    }
+    @keyframes pop{
+      0%{ transform: scale(.96); opacity:.4; }
+      100%{ transform: scale(1); opacity:1; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .heart{ animation-duration: 0s !important; }
+      .pop{ animation: none; }
+      button{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-hearts"></div>
+
+  <div class="card">
+    <div class="topline">💌 Valentine Protocol Activated 💌</div>
+
+    <!-- Step 1 -->
+    <div id="step1" class="section active">
+      <h1>Quick Verification</h1>
+      <p>Before we continue… please confirm you’re the cutest human alive.</p>
+
+      <div class="pill">⚠️ This test has a 100% correct answer</div>
+
+      <div class="btns">
+        <button id="confirm" class="primary">Confirm ✅</button>
+        <button id="no1" class="ghost">Nope ❌</button>
+      </div>
+
+      <div class="tiny">ps: the “Nope” button is emotionally unavailable</div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" class="section">
+      <h1 id="qTitle">Okay… one more thing 👀</h1>
+      <p id="qText">Will you be my Valentine? 💘</p>
+
+      <div class="btns">
+        <button id="yes" class="primary">YES 💖</button>
+        <button id="no2" class="ghost">No 🙃</button>
+      </div>
+
+      <div id="msg" class="pop" style="display:none;">
+        <strong>Excellent choice.</strong><br/>
+        Now click “YES” above to accept the cutest Valentine contract ever.
+      </div>
+
+      <div id="final" class="pop">
+        <h2 style="margin:0 0 6px; color:#b3002d;">It’s official!! 🎉💘</h2>
+        <p style="margin:0; color:#444;">
+          You just made me the luckiest person alive.<br/>
+          Now I’m legally required to spoil you (snacks included).<br/><br/>
+          <strong>Be ready on Saturday February 14th at 9:00pm 😏❤️</strong>
+        </p>
+        <div style="margin-top:12px;">
+          <button id="moreHearts" class="ghost">More hearts 😭💗</button>
+        </div>
+      </div>
+
+      <div class="tiny">Tip: try pressing “No” (if you can catch it).</div>
+    </div>
+  </div>
+
+  <script>
+    // Buttons
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+
+    const confirmBtn = document.getElementById('confirm');
+    const no1 = document.getElementById('no1');
+
+    const yesBtn = document.getElementById('yes');
+    const no2 = document.getElementById('no2');
+
+    const msg = document.getElementById('msg');
+    const finalBox = document.getElementById('final');
+    const moreHearts = document.getElementById('moreHearts');
+
+    // Move the "No" buttons around
+    function dodge(btn){
+      const maxX = 220;
+      const maxY = 160;
+      const x = (Math.random() * maxX) - (maxX/2);
+      const y = (Math.random() * maxY) - (maxY/2);
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    [no1, no2].forEach(btn => {
+      btn.addEventListener('mouseenter', () => dodge(btn));
+      btn.addEventListener('click', () => dodge(btn));
+    });
+
+    // Step 1 -> Step 2
+    confirmBtn.addEventListener('click', () => {
+      step1.classList.remove('active');
+      step2.classList.add('active');
+      step2.classList.add('pop');
+      // little tease message
+      msg.style.display = 'block';
+    });
+
+    // Hearts confetti effect
+    function burstHearts(count = 30){
+      const hearts = ["💖","💘","💗","💓","💞","❤️","💕"];
+      for(let i=0; i<count; i++){
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        const left = Math.random()*100; // vw
+        const duration = 2.8 + Math.random()*2.4; // seconds
+        const drift = (Math.random()*120 - 60) + "px";
+        const scale = (0.9 + Math.random()*1.2).toFixed(2);
+
+        h.style.left = left + "vw";
+        h.style.animationDuration = duration + "s";
+        h.style.setProperty('--drift', drift);
+        h.style.setProperty('--scale', scale);
+        h.style.fontSize = (16 + Math.random()*20) + "px";
+
+        document.body.appendChild(h);
+
+        // cleanup
+        setTimeout(() => h.remove(), (duration*1000) + 200);
+      }
+    }
+
+    // YES clicked -> celebration + dynamic changes
+    yesBtn.addEventListener('click', () => {
+      burstHearts(50);
+
+      // Update content dynamically
+      msg.style.display = 'none';
+      finalBox.style.display = 'block';
+
+      yesBtn.textContent = "YES (locked in) ✅";
+      yesBtn.style.opacity = "0.92";
+
+      // Optional: make the "No" button give up
+      no2.textContent = "No (impossible)";
+      no2.style.opacity = "0.6";
+    });
+
+    moreHearts.addEventListener('click', () => burstHearts(35));
+  </script>
+</body>
+</html>
